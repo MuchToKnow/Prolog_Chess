@@ -27,7 +27,8 @@ print([R1,R2,R3,R4,R5,R6,R7,R8]):-
 % Board1 is List of Pieces, with [Piece1, Piece2], while piece(X,Y,A,B), X=x position, Y=y position, A=type, B=black
 % x-position => (8-x)th row, y-position => (y-1)th element in the list, replace the emptycell to A type
 % Board2 is [R1', R2', R'.. R8'], while R1 = ['\..', '\..', '\..', ..., '\...']
-replaceBoard(_,[],_).
+
+replaceBoard(B1, [H], B2):- replacePiece(B1, H, B2).
 replaceBoard(B1, [H|Pieces], B3):-
   replacePiece(B2,H,B3),replaceBoard(B1,Pieces,B2).
 
@@ -36,10 +37,10 @@ replaceBoard(B1, [H|Pieces], B3):-
 % x-position starts from 1th row
 replacePiece(_,piece(_, _, 'e', 'na'),_).
 replacePiece(B1,piece(X, Y, T, C),B2):-
-  chessType(T,C,Z),
-  replace(B1,X1, Y1, Z, B2),
   X1 is 8-X, Y1 is Y-1,
-  X1 >= 0, Y1 >= 0, X1 < 9, Y1 < 9.
+  X1 >= 0, Y1 >= 0, X1 < 9, Y1 < 9,
+  chessType(T,C,Z),
+  replace(B1,X1, Y1, Z, B2).
 
 % find the row
 replace( [L|Ls] , 0 , Y , Z , [R|Ls] ) :-
@@ -71,6 +72,7 @@ chessType('b','b','\u2657').
 chessType('q','b','\u2655').
 chessType('k','b','\u2654').
 
+empty_string([[' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' '], [' ',' ',' ',' ',' ',' ',' ', ' ']]).
 empty_board([['\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665'],
 								['\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665'],
 								['\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665','\u2665'],
