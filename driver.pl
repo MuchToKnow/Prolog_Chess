@@ -7,6 +7,9 @@ Chess (Board, Turn) :-
 	CheckGameEnd(Board1),
 	Other(Turn, NextTurn),
 	Chess(Board1, NextTurn)).
-
+  
 Other(b, w).
 Other(w, b).
+
+% A board is just a list of pieces.
+% Piece(X, Y, Type, Color)
