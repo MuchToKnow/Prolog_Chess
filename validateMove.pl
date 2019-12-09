@@ -179,42 +179,42 @@ attacks(X, Y, NewX, NewY, Board, Color) :-
 % Attack 1: X+2, Y+1
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     % There is a knight at AttackerX, AttackerY
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX + 2,
     DefenderY == AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX + 2,
     DefenderY == AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX - 2,
     DefenderY == AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX - 2,
     DefenderY == AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX + 1,
     DefenderY == AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX + 1,
     DefenderY == AttackerY - 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX - 1,
     DefenderY == AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
-    getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
+    getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
     DefenderX == AttackerX - 1,
     DefenderY == AttackerY - 2.
 % End of Knight
