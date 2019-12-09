@@ -3,16 +3,6 @@
 % Empty square:
 % piece(X, Y, e, na)
 
-% printBoard(Turn, Board1):-
-%   empty_board(Board),
-%   (
-%   Turn =:= 'w' ->
-%     replaceBoard(Board, Board1, Board2);
-%   Turn =:= 'b' ->
-%     replaceBoardDiagonal(Board, Board1, Board2)
-%     ),
-%   print(Board2).
-
 printBoard('white', Board1):-
   empty_board(Board),
   replaceBoardDiagonal(Board, Board1, Board2),
