@@ -12,7 +12,7 @@ validateMove(w, X, Y, X, NewY, Board) :-
     % There is a white pawn at XY
     getPiece(X, Y, Board, p, w),
     % Movement is row number + 1
-    NewY == Y + 1,
+    NewY is Y + 1,
     % Nothing is at X, Y+1, of either color, which would block this movement
     getPiece(X, NewY, Board, e, na),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
@@ -32,7 +32,7 @@ validateMove(w, X, 2, X, 4, Board) :-
 % Black pawn moves from row 2 <= Y <= 7 by 1 space
 validateMove(b, X, Y, X, NewY, Board) :-
     getPiece(X, Y, Board, p, b),
-    NewY == Y - 1,
+    NewY is Y - 1,
     getPiece(X, NewY, Board, e, na),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, X, NewY, Board, NewBoard),
@@ -53,29 +53,28 @@ validateMove(b, X, 7, X, 5, Board) :-
 validateMove(w, X, Y, NewX, NewY, Board) :-
     % There is a white pawn at XY
     getPiece(X, Y, Board, p, w),
-    NewX == X - 1, NewY == Y + 1,
+    NewX is X - 1, NewY is Y + 1,
     % There is a black piece at X-1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
-    makeMove(X, Y, NewX, NewY, Board, NewBoard),
-    kingIsSafe(w, NewBoard).
+    makeMove(X, Y, NewX, NewY, Board, NewBoard).
 
 % White pawn attacks into the right column
 validateMove(w, X, Y, NewX, NewY, Board) :-
     % There is a white pawn at XY
     getPiece(X, Y, Board, p, w),
-    NewX == X + 1, NewY == Y + 1,
+    NewX is X + 1, NewY is Y + 1,
+    write("in Validatemove"),
     % There is a black piece at X+1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
-    makeMove(X, Y, NewX, NewY, Board, NewBoard),
-    kingIsSafe(w, NewBoard).
+    makeMove(X, Y, NewX, NewY, Board, NewBoard).
 
 % Black pawn attacks into the left column
 validateMove(b, X, Y, NewX, NewY, Board) :-
     % There is a black pawn at XY
     getPiece(X, Y, Board, p, w),
-    NewX == X - 1, NewY == Y - 1,
+    NewX is X - 1, NewY is Y - 1,
     % There is a white piece at X+1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
@@ -86,7 +85,7 @@ validateMove(b, X, Y, NewX, NewY, Board) :-
 validateMove(b, X, Y, NewX, NewY, Board) :-
     % There is a black pawn at XY
     getPiece(X, Y, Board, p, w),
-    NewX == X + 1, NewY == Y - 1,
+    NewX is X + 1, NewY is Y - 1,
     % There is a white piece at X+1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
@@ -103,13 +102,12 @@ validateMove(Color, X, Y, NewX, NewY, Board) :-
     getPiece(X, Y, Board, _, Color),
     % There is not a piece of the same color at NewX NewY (which would block it)
     \+ getPiece(NewX, NewY, Board, _, Color),
+    write("Here"),
     % XY can attack NewX NewY
     attacks(X, Y, NewX, NewY, Board, Color),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, NewX, NewY, Board, NewBoard),
     kingIsSafe(Color, NewBoard).
-
-kingIsSafe(_ , _).
 
 % King safety:
 % The Color (b or w) king (k) is safe on Board if nothing of the other color is attacking it
@@ -136,45 +134,45 @@ between(Z, X, Y) :-
 attacks(X, Y, NewX, Y, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X + 1.
+    NewX is X + 1.
 
 attacks(X, Y, NewX, Y, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X - 1.
+    NewX is X - 1.
 
 % Vertical
 attacks(X, Y, X, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewY == Y + 1.
+    NewY is Y + 1.
 
 attacks(X, Y, X, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewY == Y - 1.
+    NewY is Y - 1.
 
 % Diagonal
 attacks(X, Y, NewX, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X + 1,
-    NewY == Y + 1.
+    NewX is X + 1,
+    NewY is Y + 1.
 attacks(X, Y, NewX, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X + 1,
-    NewY == Y - 1.
+    NewX is X + 1,
+    NewY is Y - 1.
 attacks(X, Y, NewX, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X - 1,
-    NewY == Y + 1.
+    NewX is X - 1,
+    NewY is Y + 1.
 attacks(X, Y, NewX, NewY, Board, Color) :-
     % The king is at X,Y
     getPiece(X, Y, Board, k, Color),
-    NewX == X - 1,
-    NewY == Y - 1.
+    NewX is X - 1,
+    NewY is Y - 1.
 
 % KNIGHT
 % 8 Knight attacks (X +- 2, Y +- 1) ; (X +- 1, Y +- 2)
@@ -182,43 +180,43 @@ attacks(X, Y, NewX, NewY, Board, Color) :-
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     % There is a knight at AttackerX, AttackerY
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX + 2,
-    DefenderY == AttackerY + 1.
+    DefenderX is AttackerX + 2,
+    DefenderY is AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX + 2,
-    DefenderY == AttackerY - 1.
+    DefenderX is AttackerX + 2,
+    DefenderY is AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX - 2,
-    DefenderY == AttackerY + 1.
+    DefenderX is AttackerX - 2,
+    DefenderY is AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX - 2,
-    DefenderY == AttackerY - 1.
+    DefenderX is AttackerX - 2,
+    DefenderY is AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX + 1,
-    DefenderY == AttackerY + 2.
+    DefenderX is AttackerX + 1,
+    DefenderY is AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX + 1,
-    DefenderY == AttackerY - 2.
+    DefenderX is AttackerX + 1,
+    DefenderY is AttackerY - 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX - 1,
-    DefenderY == AttackerY + 2.
+    DefenderX is AttackerX - 1,
+    DefenderY is AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, kn, AttackerColor),
-    DefenderX == AttackerX - 1,
-    DefenderY == AttackerY - 2.
+    DefenderX is AttackerX - 1,
+    DefenderY is AttackerY - 2.
 % End of Knight
 
 
@@ -244,13 +242,13 @@ attacks(X, Y, NewX, NewY, Board, Color) :-
     % Board has a Color bishop at XY
     getPiece(X, Y, Board, b, Color),
     % Diagonal
-    DX == NewX - X,
-    DY == NewY - Y,
-    DX == DY,
+    DX is NewX - X,
+    DY is NewY - Y,
+    DX is DY,
     % There are no pieces between them
     between(SomeDiff, 0, DX),
-    SomeX = X + SomeDiff,
-    SomeY = Y + SomeDiff,
+    SomeX is X + SomeDiff,
+    SomeY is Y + SomeDiff,
     getPiece(SomeX, SomeY, Board, e, na).
 
 % QUEEN
@@ -275,11 +273,11 @@ attacks(X, Y, NewX, NewY, Board, Color) :-
     % Board has a Color queen at XY
     getPiece(X, Y, Board, q, Color),
     % Diagonal
-    DX == NewX - X,
-    DY == NewY - Y,
-    DX == DY,
+    DX is NewX - X,
+    DY is NewY - Y,
+    DX is DY,
     % There are no pieces between them
     between(SomeDiff, 0, DX),
-    SomeX = X + SomeDiff,
-    SomeY = Y + SomeDiff,
+    SomeX is X + SomeDiff,
+    SomeY is Y + SomeDiff,
     getPiece(SomeX, SomeY, Board, e, na).
