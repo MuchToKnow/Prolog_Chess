@@ -96,7 +96,7 @@ validateMove(b, X, Y, NewX, NewY, Board) :-
 % For all other units, validateMove uses attacks to check if the unit can move there
 validateMove(Color, X, Y, NewX, NewY, Board) :-
     % Bounds checks
-    X >= 1, X <= 8, Y >= 1, Y <= 8, NewX >= 1, NewX <= 8, NewY >= 1, NewY <= 8,
+    X > 0, X < 9, Y > 0, Y < 9, NewX > 0, NewX < 9, NewY > 0, NewY < 9,
     % At least one of NewX and NewY should be different (i.e. not both same)
     \+ (X is NewX, Y is NewY),
     % There is a piece of the right color at XY
@@ -116,6 +116,17 @@ kingIsSafe(Color, Board) :-
     getPiece(KingX, KingY, Board, k, Color),
     % Nothing of other(Color) attacks his position
     \+ attacks(_, _, KingX, KingY, Board, other(Color)).
+
+% Z is a number between X and Y
+% Used for Rook
+% X > Z > Y
+between(Z, X, Y) :-
+    X > Z,
+    Z > Y.
+% X < Z < Y
+between(Z, X, Y) :-
+    X < Z,
+    Z < Y.
 
 % KING
 % 8 King attacks
@@ -169,65 +180,54 @@ attacks(X, Y, NewX, NewY, Board, Color) :-
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     % There is a knight at AttackerX, AttackerY
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X + 2,
-    DefenderY == Y + 1.
+    DefenderX == AttackerX + 2,
+    DefenderY == AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X + 2,
-    DefenderY == Y - 1.
+    DefenderX == AttackerX + 2,
+    DefenderY == AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X - 2,
-    DefenderY == Y + 1.
+    DefenderX == AttackerX - 2,
+    DefenderY == AttackerY + 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X - 2,
-    DefenderY == Y - 1.
+    DefenderX == AttackerX - 2,
+    DefenderY == AttackerY - 1.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X + 1,
-    DefenderY == Y + 2.
+    DefenderX == AttackerX + 1,
+    DefenderY == AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X + 1,
-    DefenderY == Y - 2.
+    DefenderX == AttackerX + 1,
+    DefenderY == AttackerY - 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X - 1,
-    DefenderY == Y + 2.
+    DefenderX == AttackerX - 1,
+    DefenderY == AttackerY + 2.
 
 attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     getPiece(AttackerX, AttackerY, Board, n, AttackerColor),
-    DefenderX == X - 1,
-    DefenderY == Y - 2.
+    DefenderX == AttackerX - 1,
+    DefenderY == AttackerY - 2.
 % End of Knight
 
 % Start of Rook
-
-
-% Z is a number between X and Y
-% X > Z > Y
-between(Z, X, Y) :-
-    X > Z,
-    Z > Y.
-% X < Z < Y
-between(Z, X, Y) :-
-    X < Z,
-    Z < Y.
 
 % Vertical attack
 attacks(X, Y, X, NewY, Board, Color) :-
     % Board has a Color rook at XY
     getPiece(X, Y, Board, r, Color),
     % There are no pieces between them
-    \+ getPiece(X, SomeY, Board, _, _),
-    between(SomeY, Y, NewY).
+    between(SomeY, Y, NewY),
+    \+ getPiece(X, SomeY, Board, _, _).
     
 
 % Horizontal attack
@@ -235,5 +235,5 @@ attacks(X, Y, NewX, Y, Board, Color) :-
     % Board has a Color rook at XY
     getPiece(X, Y, Board, r, Color),
     % There are no pieces between them
-    \+ getPiece(X, SomeY, Board, _, _),
-    between(SomeY, Y, NewY).
+    between(SomeX, X, NewX),
+    \+ getPiece(SomeX, Y, Board, _, _).
