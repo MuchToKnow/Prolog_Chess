@@ -219,8 +219,8 @@ attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     DefenderY == AttackerY - 2.
 % End of Knight
 
-% Start of Rook
 
+% ROOK
 % Vertical attack
 attacks(X, Y, X, NewY, Board, Color) :-
     % Board has a Color rook at XY
@@ -229,7 +229,6 @@ attacks(X, Y, X, NewY, Board, Color) :-
     between(SomeY, Y, NewY),
     getPiece(X, SomeY, Board, e, na).
     
-
 % Horizontal attack
 attacks(X, Y, NewX, Y, Board, Color) :-
     % Board has a Color rook at XY
