@@ -4,18 +4,18 @@
 % piece(X, Y, e, na)
 
 printBoard(w, Board1):-
-  empty_reverse_board(Board),
+  empty_board(Board),
   replaceBoardDiagonal(Board, Board1, Board2),
   write('Enter moves like <a2d4.>. Enter <exit.> to quit'),nl,
 	write('It is WHITE turn: '),nl,
   print(Board2).
 
 printBoard(b, Board1):-
-  empty_board(Board),
+  empty_reverse_board(Board),
   replaceBoard(Board, Board1, Board2),
   write('Enter moves like <a2d4.>. Enter <exit.> to quit'),nl,
 	write('It is BLACK turn: '),nl,
-  print(Board2).
+  printb(Board2).
 
 % actually print the board by each rows
 print([R1,R2,R3,R4,R5,R6,R7,R8]):-
@@ -28,6 +28,17 @@ print([R1,R2,R3,R4,R5,R6,R7,R8]):-
 	write("2"),write(R2),nl,
 	write("1"),write(R1),nl,
 	write("  a b c d e f g h"),nl,nl.
+
+printb([R1,R2,R3,R4,R5,R6,R7,R8]):-
+  write("1"),write(R8),nl,
+	write("2"),write(R7),nl,
+	write("3"),write(R6),nl,
+	write("4"),write(R5),nl,
+	write("5"),write(R4),nl,
+	write("6"),write(R3),nl,
+	write("7"),write(R2),nl,
+	write("8"),write(R1),nl,
+	write("  h g f e d c b a"),nl,nl.
 
 % replaceBoard(Board, Board1, Board2)
 % from Board to Board2 from information in Board1
@@ -49,14 +60,14 @@ replaceBoardDiagonal(B1, [H|Pieces], B3):-
 % x-position starts from 1th row
 replacePiece(B,piece(_, _, 'e', 'na'),B).
 replacePiece(B1,piece(Y, X, T, C),B2):-
-  X1 is X-1, Y1 is Y-1,
+  X1 is 8-X, Y1 is 8-Y,
   X1 >= 0, Y1 >= 0, X1 < 9, Y1 < 9,
   chessType(T,C,Z),
   replace(B1,X1, Y1, Z, B2).
 
 replacePieceDiagonal(B,piece(_, _, 'e', 'na'),B).
-replacePieceDiagonal(B1,piece(Y, X, T, C),B2):-
-  X1 is 8-X, Y1 is 8-Y,
+replacePieceDiagonal(B1,piece(  Y, X, T, C),B2):-
+  X1 is X-1, Y1 is Y-1,
   X1 >= 0, Y1 >= 0, X1 < 9, Y1 < 9,
   chessType(T,C,Z),
   replace(B1,X1, Y1, Z, B2).
