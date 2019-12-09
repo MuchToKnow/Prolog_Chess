@@ -54,7 +54,7 @@ validateMove(w, X, Y, NewX, NewY, Board) :-
     % There is a white pawn at XY
     getPiece(X, Y, Board, p, w),
     NewX == X - 1, NewY == Y + 1,
-    % There is a black piece at X+1, Y+1
+    % There is a black piece at X-1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, NewX, NewY, Board, NewBoard),
@@ -108,6 +108,8 @@ validateMove(Color, X, Y, NewX, NewY, Board) :-
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, NewX, NewY, Board, NewBoard),
     kingIsSafe(Color, NewBoard).
+
+kingIsSafe(_ , _).
 
 % King safety:
 % The Color (b or w) king (k) is safe on Board if nothing of the other color is attacking it
