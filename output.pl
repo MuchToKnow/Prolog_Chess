@@ -64,7 +64,7 @@ replacePiece(B1,piece(Y, X, T, C),B2):-
   chessType(T,C,Z),
   replace(B1,X1, Y1, Z, B2).
 
-
+replacePieceDiagonal(_,piece(_, _, 'e', 'na'),_).
 replacePieceDiagonal(B1,piece(Y, X, T, C),B2):-
   X1 is 8-X, Y1 is 8-Y,
   X1 >= 0, Y1 >= 0, X1 < 9, Y1 < 9,
