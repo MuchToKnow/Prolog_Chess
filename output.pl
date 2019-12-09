@@ -3,14 +3,14 @@
 % Empty square:
 % piece(X, Y, e, na)
 
-printBoard('white', Board1):-
+printBoard(w, Board1):-
   empty_reverse_board(Board),
   replaceBoardDiagonal(Board, Board1, Board2),
   write('Enter moves like <a2d4.>. Enter <exit.> to quit'),nl,
 	write('It is WHITE turn: '),nl,
   print(Board2).
 
-printBoard('black', Board1):-
+printBoard(b, Board1):-
   empty_board(Board),
   replaceBoard(Board, Board1, Board2),
   write('Enter moves like <a2d4.>. Enter <exit.> to quit'),nl,
@@ -80,13 +80,13 @@ replace_column( [C|Cs] , Y , Z , [C|Rs] ) :-
 
 chessType('p','w','\u265F').
 chessType('r','w','\u265C').
-chessType('k','w','\u265E').
+chessType('kn','w','\u265E').
 chessType('b','w','\u265D').
 chessType('q','w','\u265B').
 chessType('k','w','\u265A').
 chessType('p','b','\u2659').
 chessType('r','b','\u2656').
-chessType('k','b','\u2658').
+chessType('kn','b','\u2658').
 chessType('b','b','\u2657').
 chessType('q','b','\u2655').
 chessType('k','b','\u2654').
