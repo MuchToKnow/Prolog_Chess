@@ -14,7 +14,7 @@ validateMove(w, X, Y, X, NewY, Board) :-
     % Movement is row number + 1
     NewY == Y + 1,
     % Nothing is at X, Y+1, of either color, which would block this movement
-    \+ getPiece(X, NewY, Board, _, _),
+    getPiece(X, NewY, Board, e, na),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, X, NewY, Board, NewBoard),
     kingIsSafe(w, NewBoard).
@@ -24,8 +24,8 @@ validateMove(w, X, 2, X, 4, Board) :-
     % There is a white pawn at X2
     getPiece(X, 2, Board, p, w),
     % Ensure nothing is at X3 or X4 of either color, which would block this movement
-    \+ getPiece(X, 3, Board, _, _),
-    \+ getPiece(X, 4, Board, _, _),
+    getPiece(X, 3, Board, e, na),
+    getPiece(X, 4, Board, e, na),
     makeMove(X, 2, X, 4, Board, NewBoard),
     kingIsSafe(w, NewBoard).
 
@@ -33,7 +33,7 @@ validateMove(w, X, 2, X, 4, Board) :-
 validateMove(b, X, Y, X, NewY, Board) :-
     getPiece(X, Y, Board, p, b),
     NewY == Y - 1,
-    \+ getPiece(X, NewY, Board, _, _),
+    getPiece(X, NewY, Board, e, na),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
     makeMove(X, Y, X, NewY, Board, NewBoard),
     kingIsSafe(b, NewBoard).
@@ -43,8 +43,8 @@ validateMove(b, X, 7, X, 5, Board) :-
     % There is a black pawn at X7
     getPiece(X, 7, Board, p, b),
     % Ensure nothing is at X3 or X4 of either color, which would block this movement
-    \+ getPiece(X, 6, Board, _, _),
-    \+ getPiece(X, 5, Board, _, _),
+    getPiece(X, 6, Board, e, na),
+    getPiece(X, 5, Board, e, na),
     makeMove(X, 7, X, 5, Board, NewBoard),
     kingIsSafe(b, NewBoard).
 
@@ -227,7 +227,7 @@ attacks(X, Y, X, NewY, Board, Color) :-
     getPiece(X, Y, Board, r, Color),
     % There are no pieces between them
     between(SomeY, Y, NewY),
-    \+ getPiece(X, SomeY, Board, _, _).
+    getPiece(X, SomeY, Board, e, na).
     
 
 % Horizontal attack
@@ -236,4 +236,4 @@ attacks(X, Y, NewX, Y, Board, Color) :-
     getPiece(X, Y, Board, r, Color),
     % There are no pieces between them
     between(SomeX, X, NewX),
-    \+ getPiece(SomeX, Y, Board, _, _).
+    getPiece(SomeX, Y, Board, e, na).
