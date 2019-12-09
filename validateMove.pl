@@ -236,3 +236,48 @@ attacks(X, Y, NewX, Y, Board, Color) :-
     % There are no pieces between them
     between(SomeX, X, NewX),
     getPiece(SomeX, Y, Board, e, na).
+
+% BISHOP
+attacks(X, Y, NewX, NewY, Board, Color) :-
+    % Board has a Color bishop at XY
+    getPiece(X, Y, Board, b, Color),
+    % Diagonal
+    DX == NewX - X,
+    DY == NewY - Y,
+    DX == DY,
+    % There are no pieces between them
+    between(SomeDiff, 0, DX),
+    SomeX = X + SomeDiff,
+    SomeY = Y + SomeDiff,
+    getPiece(SomeX, SomeY, Board, e, na).
+
+% QUEEN
+% Vertical
+attacks(X, Y, X, NewY, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % There are no pieces between them
+    between(SomeY, Y, NewY),
+    getPiece(X, SomeY, Board, e, na).
+
+% Horizontal
+attacks(X, Y, NewX, Y, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % There are no pieces between them
+    between(SomeX, X, NewX),
+    getPiece(SomeX, Y, Board, e, na).
+
+% Diagonal
+attacks(X, Y, NewX, NewY, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % Diagonal
+    DX == NewX - X,
+    DY == NewY - Y,
+    DX == DY,
+    % There are no pieces between them
+    between(SomeDiff, 0, DX),
+    SomeX = X + SomeDiff,
+    SomeY = Y + SomeDiff,
+    getPiece(SomeX, SomeY, Board, e, na).
