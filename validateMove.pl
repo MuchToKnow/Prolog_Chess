@@ -219,8 +219,8 @@ attacks(AttackerX, AttackerY, DefenderX, DefenderY, Board, AttackerColor) :-
     DefenderY == AttackerY - 2.
 % End of Knight
 
-% Start of Rook
 
+% ROOK
 % Vertical attack
 attacks(X, Y, X, NewY, Board, Color) :-
     % Board has a Color rook at XY
@@ -229,7 +229,6 @@ attacks(X, Y, X, NewY, Board, Color) :-
     between(SomeY, Y, NewY),
     \+ getPiece(X, SomeY, Board, _, _).
     
-
 % Horizontal attack
 attacks(X, Y, NewX, Y, Board, Color) :-
     % Board has a Color rook at XY
@@ -237,3 +236,48 @@ attacks(X, Y, NewX, Y, Board, Color) :-
     % There are no pieces between them
     between(SomeX, X, NewX),
     \+ getPiece(SomeX, Y, Board, _, _).
+
+% BISHOP
+attacks(X, Y, NewX, NewY, Board, Color) :-
+    % Board has a Color bishop at XY
+    getPiece(X, Y, Board, b, Color),
+    % Diagonal
+    DX == NewX - X,
+    DY == NewY - Y,
+    DX == DY,
+    % There are no pieces between them
+    between(SomeDiff, 0, DX),
+    SomeX = X + SomeDiff,
+    SomeY = Y + SomeDiff,
+    \+ getPiece(SomeX, SomeY, Board, _, _).
+
+% QUEEN
+% Vertical
+attacks(X, Y, X, NewY, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % There are no pieces between them
+    between(SomeY, Y, NewY),
+    \+ getPiece(X, SomeY, Board, _, _).
+    
+% Horizontal
+attacks(X, Y, NewX, Y, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % There are no pieces between them
+    between(SomeX, X, NewX),
+    \+ getPiece(SomeX, Y, Board, _, _).
+
+% Diagonal
+attacks(X, Y, NewX, NewY, Board, Color) :-
+    % Board has a Color queen at XY
+    getPiece(X, Y, Board, q, Color),
+    % Diagonal
+    DX == NewX - X,
+    DY == NewY - Y,
+    DX == DY,
+    % There are no pieces between them
+    between(SomeDiff, 0, DX),
+    SomeX = X + SomeDiff,
+    SomeY = Y + SomeDiff,
+    \+ getPiece(SomeX, SomeY, Board, _, _).
