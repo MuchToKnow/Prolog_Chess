@@ -64,7 +64,6 @@ validateMove(w, X, Y, NewX, NewY, Board) :-
     % There is a white pawn at XY
     getPiece(X, Y, Board, p, w),
     NewX is X + 1, NewY is Y + 1,
-    write("in Validatemove"),
     % There is a black piece at X+1, Y+1
     getPiece(NewX, NewY, Board, _, b),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)
@@ -102,7 +101,6 @@ validateMove(Color, X, Y, NewX, NewY, Board) :-
     getPiece(X, Y, Board, _, Color),
     % There is not a piece of the same color at NewX NewY (which would block it)
     \+ getPiece(NewX, NewY, Board, _, Color),
-    write("Here"),
     % XY can attack NewX NewY
     attacks(X, Y, NewX, NewY, Board, Color),
     % Simulate the move and ensure it doesn't expose the king (which would be illegal)

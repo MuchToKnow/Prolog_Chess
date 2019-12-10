@@ -2,7 +2,6 @@
 :- [input].
 :- [makeMove].
 :- [output].
-:- [validateMove].
 other(b, w).
 other(w, b).
 chess(Board, Turn) :-
