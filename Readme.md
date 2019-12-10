@@ -1,6 +1,8 @@
 # Prolog Chess
 Chess in prolog for 312 project.
 
+The move Validator is still incomplete and is missing some cases so be aware if you are actually playing a game with this!
+
 To run in a prolog environment:
 ```
 [driverNoValidation].
